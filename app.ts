@@ -5,6 +5,7 @@ import { clerkMiddleware } from "@clerk/express";
 import express from 'express';
 import { Webhook } from 'svix';
 import { connectDB } from './db/connect';
+import productsRouter from './routes/products'
 
 dotenv.config({path: `.env.local`})
 dotenv.config()
@@ -29,14 +30,7 @@ app.use(clerkMiddleware())
 // TODO: figure out a better way to handle this in prod
 app.use(cors());
 
-app.get('/api/v1/products', (req, res) => {
-  res.status(200).json({
-    products: [
-      { id: 1, name: 'wooden chair' },
-      { id: 2, name: 'fan' },
-    ],
-  });
-});
+app.use('/api/v1/products', productsRouter)
 
 // TODO: place webhooks in separate folder
 app.post(
@@ -120,7 +114,6 @@ app.post(
 )
 
 const start = async () => {
-  console.log('mongo uri - ', process.env.MONGO_URI)
   try {
     // connectDB
     await connectDB(process.env.MONGO_URI || '')
