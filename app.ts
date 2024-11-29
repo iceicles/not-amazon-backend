@@ -4,6 +4,7 @@ import cors from 'cors'
 import { clerkMiddleware } from "@clerk/express";
 import express from 'express';
 import { Webhook } from 'svix';
+import { connectDB } from './db/connect';
 
 dotenv.config({path: `.env.local`})
 dotenv.config()
@@ -37,6 +38,7 @@ app.get('/api/v1/products', (req, res) => {
   });
 });
 
+// TODO: place webhooks in separate folder
 app.post(
   '/api/webhooks',
   // This is a generic method to parse the contents of the payload.
@@ -117,4 +119,16 @@ app.post(
   },
 )
 
-app.listen(port, () => console.log(`Server listening on port ${port}...`));
+const start = async () => {
+  console.log('mongo uri - ', process.env.MONGO_URI)
+  try {
+    // connectDB
+    await connectDB(process.env.MONGO_URI || '')
+    app.listen(port, () => console.log(`Server listening on port ${port}...`));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+start();
+
