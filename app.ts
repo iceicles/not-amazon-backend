@@ -6,6 +6,7 @@ import express from 'express';
 import { Webhook } from 'svix';
 import { connectDB } from './db/connect';
 import productsRouter from './routes/products'
+import wishlistRouter from './routes/wishlist'
 
 dotenv.config({path: `.env.local`})
 dotenv.config()
@@ -20,7 +21,7 @@ app.use(clerkMiddleware())
 
 // parse jasong matching 'application/json' content-type in request headers
 // can't use this when using webhook route - https://docs.svix.com/receiving/verifying-payloads/how
-// app.use(express.json());
+app.use(express.json());
 
 //app.use(express.raw({ type: 'application/json' }));
 // urlencoded parses incoming reqs and populates the request's body (req.body) by creating a new object containing the parsed data
@@ -31,6 +32,7 @@ app.use(clerkMiddleware())
 app.use(cors());
 
 app.use('/api/v1/products', productsRouter)
+app.use('/api/v1/products/wishlist', wishlistRouter)
 
 // TODO: place webhooks in separate folder
 app.post(
