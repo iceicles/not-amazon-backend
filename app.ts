@@ -19,7 +19,7 @@ const port = process.env.PORT || 4000
 // and if found, attaches the Auth object to the request object under the auth key
 app.use(clerkMiddleware())
 
-// parse jasong matching 'application/json' content-type in request headers
+// parse json matching 'application/json' content-type in request headers
 // can't use this when using webhook route - https://docs.svix.com/receiving/verifying-payloads/how
 app.use(express.json());
 
