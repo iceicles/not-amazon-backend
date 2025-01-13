@@ -1,4 +1,4 @@
-import wishlistSchema from '../models/wishlistProduct'
+import wishlistSchema from '../models/wishlist'
 
 
 export const createWishlistProduct = async(req: any, res: any) => {
@@ -37,4 +37,9 @@ export const createWishlistProduct = async(req: any, res: any) => {
 export const getAllWishlistProducts = async(req: any, res: any) => {
   const wishlistProduct = await wishlistSchema.find({});
   res.status(200).json({wishlistProduct})
+}
+
+export const deleteAllWishlistProducts = async(req: any, res: any) => {
+  await wishlistSchema.deleteMany({})
+  res.status(200).json({msg: 'products deleted'})
 }

@@ -2,12 +2,17 @@ import mongoose from "mongoose";
 
 const wishlistSchema = new mongoose.Schema({
   // guest id or auth user
-  name: {
-    type: String,
+  // user: {
+  //   type: mongoose.Types.ObjectId,
+  //   ref: 'User', // user model
+  //   required: true
+  // },
+  user: {
+    type: String
   },
   productId: {
     type: String,
-  }
+  },
   // title: {
   //   type: String,
   // },
